@@ -35,6 +35,8 @@ const Notice = () => {
 
   if (error) return <p>{error}</p>;
 
+  console.log(notices);
+
   if (notices === null)
     return (
       <div className="h-[404px] flex justify-center items-center">
