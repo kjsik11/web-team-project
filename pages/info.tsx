@@ -39,7 +39,8 @@ const actions = [
     icon: BadgeCheckIcon,
     iconForeground: 'text-purple-700',
     iconBackground: 'bg-purple-50',
-    description: '',
+    description:
+      'mongoDB. mongoDB는 문서지향(Document-Oriented) 저장소를 제공하는 NoSQL 데이터베이스 시스템이다',
   },
   {
     title: 'Vercel',
@@ -47,7 +48,8 @@ const actions = [
     icon: UsersIcon,
     iconForeground: 'text-light-blue-700',
     iconBackground: 'bg-light-blue-50',
-    description: '',
+    description:
+      'Vercel은 사용자의 Work flow에 완벽하게 맞는 정적 사이트 및 서버리스 기능을 위한 클라우트 플랫폼이다',
   },
   {
     title: 'Tailwind',
@@ -55,7 +57,8 @@ const actions = [
     icon: CashIcon,
     iconForeground: 'text-yellow-700',
     iconBackground: 'bg-yellow-50',
-    description: '',
+    description:
+      'Tailwind란 Utility-First 컨셉을 가진 프레임워크로 부트스트랩과 비슷하게 미리 세팅된 유틸리티 클래스를 활용하는 방식으로 HTML코드 내에서 스타일링을 할 수 있게 해준다.',
   },
   {
     title: 'git',
@@ -63,19 +66,21 @@ const actions = [
     icon: ReceiptRefundIcon,
     iconForeground: 'text-rose-700',
     iconBackground: 'bg-rose-50',
-    description: '',
+    description:
+      'Git은 소프트웨어를 개발하는 기업의 핵심 자산인 소스코드를 효과적으로 관리할 수 있게 해주는 무료, 공개소프트웨어이다',
   },
   {
-    title: 'NextJS',
+    title: 'Next.JS',
     href: 'https://nextjs.org/',
     icon: AcademicCapIcon,
     iconForeground: 'text-indigo-700',
     iconBackground: 'bg-indigo-50',
-    description: '',
+    description:
+      'Next.JS는 React의 Server Side Rendering을 쉽게 구현할 수 있게 도와주는 간단한 프레임워크이다.',
   },
 ];
 
-const portfolio = () => {
+const InformationPage = () => {
   return (
     <div className="pt-4 sm:pt-8 md:pt-12 pb-32 px-6 md:px-8 lg:px-12 max-w-screen-xl mx-auto ">
       <BreadCrumb pages={BreadPages} className="mb-8" />
@@ -148,5 +153,5 @@ const portfolio = () => {
   );
 };
 
-portfolio.Layout = Dashboard;
-export default portfolio;
+InformationPage.Layout = Dashboard;
+export default InformationPage;

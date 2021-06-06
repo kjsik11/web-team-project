@@ -24,15 +24,20 @@ import Button from '@components/ui/Button';
 import { BookOpenIcon } from '@heroicons/react/solid';
 
 const sidebarNavigation = [
-  { name: 'Home', href: '/dashboard', icon: HomeIcon, key: 'dashboard' },
+  { name: 'Home', href: '/', icon: HomeIcon, key: '/home' },
   {
     name: 'Information',
     href: '/info',
     icon: BookOpenIcon,
     key: 'info',
   },
-  { name: 'Schedule', href: '/schedule', icon: CalendarIcon, key: 'schedule' },
-  { name: 'Contact', href: '/contact', icon: ViewGridIcon, key: 'contact' },
+  {
+    name: 'Portfolio',
+    href: '/portfolio',
+    icon: CalendarIcon,
+    key: 'portfolio',
+  },
+  { name: 'Notice', href: '/notice', icon: ViewGridIcon, key: 'notice' },
   { name: 'Settings', href: '/settings', icon: CogIcon, key: 'settings' },
 ];
 const userNavigation = [
@@ -112,7 +117,7 @@ const Dashboard: React.FC<Props> = ({ sidebar, children }) => {
                 <span className="mt-2">{'test user'}</span>
               </div>
               <div className="pt-2">
-                <NextLink href="/">
+                <NextLink href="#">
                   <Button size="sm" color="white">
                     <span className="text-xs text-lightBlue-600">Signout</span>
                   </Button>
