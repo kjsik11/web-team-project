@@ -1,16 +1,15 @@
 import React from 'react';
 
 // components
-// import { Head } from '@components/core';
+import NoticeListItem from '@components/Notice';
+import Dashboard from '@components/layout/Dashboard';
+import BreadCrumb from '@components/ui/BreadCrumb';
 
 // libraries
+import getAllNotices from '@lib/claNotice/getAllNotices';
 
 // icons
 import Spinner from '@components/icons/Spinner';
-import Dashboard from '@components/layout/Dashboard';
-import getAllNotices from '@lib/claNotice/getAllNotices';
-import NoticeListItem from '@components/Notice';
-import BreadCrumb from '@components/ui/BreadCrumb';
 
 const BreadPages = [
   {

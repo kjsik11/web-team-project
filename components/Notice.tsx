@@ -29,7 +29,10 @@ const NoticeListItem: React.FC<Props> = ({ className, noticeItem }) => {
   }, [noticeItem]);
 
   return (
-    <Disclosure as="div" className={cn(className, 'border-b border-gray-200')}>
+    <Disclosure
+      as="div"
+      className={cn(className, 'border-b bg-gray-100 px-4 border-gray-200')}
+    >
       {({ open }) => (
         <>
           <Disclosure.Button

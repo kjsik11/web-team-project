@@ -70,10 +70,7 @@ const UploadMarkdown = () => {
     if (router.query.noticeId && typeof router.query.noticeId === 'string') {
       getNoticeById(router.query.noticeId)
         .then(async (notice) => {
-          setPreviewContent(
-            // await Promise.resolve(converter.makeHtml(notice.content)),
-            await Promise.resolve(mdToHtml(notice.content)),
-          );
+          setPreviewContent(await Promise.resolve(mdToHtml(notice.content)));
           setNoticeInputs({ ...notice });
         })
         .catch((err) => setError(err.message));
@@ -142,7 +139,7 @@ const UploadMarkdown = () => {
             {router.query.noticeId ? '수정' : '업로드'}
           </Button>
         </div>
-        <div className="bg-white p-4 rounded-lg">
+        <div className="bg-gray-100 p-4 rounded-lg">
           <p className="text-2xl font-bold">미리보기</p>
           <Disclosure as="div" defaultOpen>
             {({ open }) => (

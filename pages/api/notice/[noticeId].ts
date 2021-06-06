@@ -18,6 +18,7 @@ const handler: (
 
   if (!notice) return throwError(res, 13, 404);
 
+  console.log(notice);
   if (req.method === 'GET') {
     return res.json({
       notice,
