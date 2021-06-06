@@ -1,20 +1,7 @@
 interface NoticeInfo {
   _id: string;
   title: string;
-  markdownUrl: string;
-  writer: {
-    _id: string;
-    name: string;
-  };
-  history: {
-    title: string;
-    markdownUrl: string;
-    writer: {
-      _id: string;
-      name: string;
-    };
-    updated: string;
-  }[];
+  content: string;
   created: string;
   lastUpdated: string;
   deleted: string | null;

@@ -20,7 +20,7 @@ const BreadPages = [
   },
 ];
 
-const Notice = () => {
+const ViewNoti = () => {
   const [notices, setNotices] = React.useState<NoticeInfo[] | null>(null);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -38,6 +38,7 @@ const Notice = () => {
     return (
       <div className="h-[404px] flex justify-center items-center">
         <Spinner className="w-12 h-12 animate-spin" />
+        {notices}
       </div>
     );
 
@@ -47,22 +48,24 @@ const Notice = () => {
       <div className="pb-6 border-b border-gray-200">
         <h3 className="text-3xl font-semibold">공지사항</h3>
       </div>
-      <div className="max-w-3xl mx-auto mt-8">
-        {notices.length === 0 ? (
-          <div>공지사항이 없습니다.</div>
-        ) : (
-          <ul>
-            {notices.map((notice) => (
-              <li key={`notice-${notice._id}`}>
-                <NoticeListItem noticeItem={notice} className="mb-6" />
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      {notices && (
+        <div className="max-w-3xl mx-auto mt-8">
+          {notices.length === 0 ? (
+            <div>공지사항이 없습니다.</div>
+          ) : (
+            <ul>
+              {notices.map((notice) => (
+                <li key={`notice-${notice._id}`}>
+                  <NoticeListItem noticeItem={notice} className="mb-6" />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-Notice.Layout = Dashboard;
-export default Notice;
+ViewNoti.Layout = Dashboard;
+export default ViewNoti;

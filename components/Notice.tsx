@@ -19,16 +19,6 @@ interface Props {
 }
 
 const NoticeListItem: React.FC<Props> = ({ className, noticeItem }) => {
-  const [content, setContent] = React.useState<string>('');
-
-  React.useEffect(() => {
-    getContentByMdUrl(noticeItem.markdownUrl)
-      .then(async (content) =>
-        setContent(await Promise.resolve(mdToHtml(content))),
-      )
-      .catch((err) => console.log(err.message));
-  }, [noticeItem]);
-
   return (
     <Disclosure
       as="div"
@@ -54,12 +44,7 @@ const NoticeListItem: React.FC<Props> = ({ className, noticeItem }) => {
             </p>
           </Disclosure.Button>
           <Disclosure.Panel className="bg-gray-50 p-2 mt-2 mb-6" as="div">
-            <div
-              className="markdown-container"
-              dangerouslySetInnerHTML={{
-                __html: content,
-              }}
-            />
+            <p>{noticeItem.content}</p>
           </Disclosure.Panel>
         </>
       )}

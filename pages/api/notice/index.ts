@@ -17,19 +17,16 @@ const handler: (
     await cursor.close();
 
     return res.json({
-      notices: notices.map((val) => ({
-        ...val,
-        _id: val._id,
-      })),
+      notices,
     });
   }
 
   if (req.method === 'POST') {
-    const { title, markdownUrl } = req.body;
+    const { title, content } = req.body;
 
     const { insertedId } = await db.collection('notice').insertOne({
       title,
-      markdownUrl,
+      content,
       created: new Date(),
       lastUpdated: new Date(),
       deleted: null,

@@ -20,15 +20,12 @@ const handler: (
 
   if (req.method === 'GET') {
     return res.json({
-      notice: {
-        ...notice,
-        _id: notice._id,
-      },
+      notice,
     });
   }
 
   if (req.method === 'PUT') {
-    const { title, markdownUrl } = req.body;
+    const { title, content } = req.body;
     const { upsertedId } = await db.collection('notice').updateOne(
       {
         _id: notice._id,
@@ -36,7 +33,7 @@ const handler: (
       {
         $set: {
           title,
-          markdownUrl,
+          content,
           lastUpdated: new Date(),
         },
       },
