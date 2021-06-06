@@ -258,5 +258,4 @@ const UploadMarkdown = () => {
 };
 
 UploadMarkdown.Layout = Dashboard;
-UploadMarkdown.title = '공지사항 업로드 및 수정';
 export default UploadMarkdown;

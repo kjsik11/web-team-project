@@ -20,7 +20,6 @@ const BreadPages = [
   },
 ];
 
-// TODO: SWR
 const Notice = () => {
   const [notices, setNotices] = React.useState<NoticeInfo[] | null>(null);
   const [error, setError] = React.useState<string | null>(null);
@@ -34,8 +33,6 @@ const Notice = () => {
   }, []);
 
   if (error) return <p>{error}</p>;
-
-  console.log(notices);
 
   if (notices === null)
     return (
@@ -68,5 +65,4 @@ const Notice = () => {
 };
 
 Notice.Layout = Dashboard;
-Notice.title = '공지사항';
 export default Notice;

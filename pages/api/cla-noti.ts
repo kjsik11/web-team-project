@@ -18,7 +18,6 @@ const handler: (
 
     await cursor.close();
 
-    console.log(notices);
     return res.json({
       notices,
     });
