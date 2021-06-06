@@ -1,7 +1,7 @@
 import fetcher from '@lib/fetcher';
 
 const getAllNotices: () => Promise<NoticeInfo[]> = async () => {
-  const { notices } = await fetcher('/api/v1/admin/notice');
+  const { notices } = await fetcher('/api/notice');
 
   return notices;
 };

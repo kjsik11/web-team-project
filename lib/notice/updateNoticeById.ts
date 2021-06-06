@@ -1,6 +1,5 @@
 import uploadMarkdown from '@lib/aws/uploadMarkdown';
 import fetcher from '@lib/fetcher';
-import checkToken from '@lib/v1/auth/checkToken';
 
 const updateNoticeById: (
   noticeInput: NoticeInputs,
@@ -9,11 +8,9 @@ const updateNoticeById: (
   if (!title) throw new Error('제목을 입력해주세요');
 
   try {
-    await checkToken().catch(() => {});
-
     const markdownUrl = await uploadMarkdown(content);
 
-    await fetcher(`/api/v1/admin/notice/${noticeId}`, {
+    await fetcher(`/api/notice/${noticeId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

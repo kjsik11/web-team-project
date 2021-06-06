@@ -78,19 +78,13 @@ const NoticePage = () => {
       <div className="flex flex-col p-4">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <a href="/admin/notice/upload">
+            <a href="/notice/upload">
               <Button className="mb-4">공지사항 추가</Button>
             </a>
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr className="text-center">
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      작성자
-                    </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -111,9 +105,6 @@ const NoticePage = () => {
                   {noticeList.map((notice, idx) => (
                     <tr key={`${notice._id}-${idx}`} className="text-center">
                       <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {notice.writer.name}
-                      </td>
-                      <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         {notice.title}
                       </td>
                       <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -122,7 +113,7 @@ const NoticePage = () => {
                       <td className="px-6 py-4 w-10 whitespace-nowrap text-sm text-gray-700">
                         <a
                           className="hover:opacity-80"
-                          href={`/admin/notice/upload?noticeId=${notice._id}`}
+                          href={`/notice/upload?noticeId=${notice._id}`}
                         >
                           <button>수정</button>
                         </a>

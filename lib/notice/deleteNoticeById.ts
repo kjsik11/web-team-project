@@ -4,7 +4,7 @@ const deleteNoticeById: (noticeId: string) => Promise<void> = async (
   noticeId,
 ) => {
   try {
-    await fetcher(`/api/v1/admin/notice/${noticeId}`, {
+    await fetcher(`/api/notice/${noticeId}`, {
       method: 'DELETE',
     });
   } catch (err) {

@@ -5,7 +5,7 @@ const getNoticeById: (noticeId: string) => Promise<NoticeInputs> = async (
 ) => {
   const {
     notice: { title, markdownUrl },
-  } = await fetcher(`/api/v1/admin/notice/${noticeId}`);
+  } = await fetcher(`/api/notice/${noticeId}`);
 
   const response = await fetch(markdownUrl);
 
