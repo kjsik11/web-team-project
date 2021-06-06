@@ -12,9 +12,10 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const colorClasses = {
-  lightBlue: 'bg-lightBlue-400 hover:bg-lightBlue-500 border-transparent',
+  lightBlue:
+    'bg-lightBlue-400 hover:bg-lightBlue-500 border-transparent text-white',
   red:
-    'bg-red-400 hover:bg-red-500 focus-visible:ring-red-500 border-transparent',
+    'bg-red-400 hover:bg-red-500 focus-visible:ring-red-500 border-transparent text-white',
   white: 'bg-white hover:bg-gray-50 border-gray-300',
 };
 
@@ -37,18 +38,15 @@ const Button = React.forwardRef<any, Props>(
         type="button"
         className={cn(
           className,
-          'px-4 py-2 inline-flex items-center border shadow-sm rounded-md font-semibold',
+          'inline-flex justify-center items-center border shadow-sm rounded-md font-semibold',
+          'disabled:text-gray-50 disabled:bg-gray-400 disabled:opacity-70 disabled:cursor-default',
+          full ? 'w-full px-1.5 py-2' : 'px-4 py-2',
           {
             'text-sm': size === 'sm',
             'text-base': size === 'base',
             'text-lg': size === 'lg',
-            'justify-center w-full px-1.5 py-2': full,
           },
           colorClasses[color],
-          {
-            'text-white disabled:text-gray-50 disabled:bg-gray-400 disabled:opacity-70 disabled:cursor-default':
-              color !== 'white',
-          },
         )}
         {...props}
       >

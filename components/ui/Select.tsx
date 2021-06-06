@@ -4,29 +4,31 @@ import cn from 'classnames';
 
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 
-type SelectItem<T> = {
+interface SelectItem {
   key: string;
   label: string;
-  value: T;
-};
+  value: unknown;
+}
 
-type Props<T> = {
+interface Props {
   className?: string;
   label?: string;
-  items: SelectItem<T>[];
-  selectedValue: T;
-  onSelect: (item: SelectItem<T>) => void;
+  items: SelectItem[];
+  selectedValue: unknown;
+  onSelect: (item: SelectItem) => void;
+  disabled?: boolean;
   optional?: boolean;
-};
+}
 
-export default function Select<T>({
+const Select: React.FC<Props> = ({
   className,
   label,
   items,
   selectedValue,
   onSelect,
+  disabled = false,
   optional = false,
-}: Props<T>) {
+}) => {
   const getItemByValue = React.useCallback(
     (value: unknown) => {
       const idx = items.findIndex((val) => val.value === value);
@@ -39,18 +41,33 @@ export default function Select<T>({
 
   return (
     <div className={cn(className)}>
-      <Listbox value={getItemByValue(selectedValue)} onChange={onSelect}>
+      <Listbox
+        value={getItemByValue(selectedValue)}
+        onChange={onSelect}
+        disabled={disabled}
+      >
         {({ open }) => (
           <>
-            <Listbox.Label className="block text-base font-semibold text-gray-700">
-              <span>{label}</span>
+            <Listbox.Label
+              className={cn('block text-base font-semibold text-gray-700', {
+                'text-gray-400': disabled,
+              })}
+            >
+              <span className={cn({ 'text-gray-400': disabled })}>{label}</span>
               <span className={cn('text-gray-400', { hidden: !optional })}>
                 &nbsp;(선택)
               </span>
             </Listbox.Label>
             <div className="mt-1 relative">
-              <Listbox.Button className="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
-                <span className="block truncate text-base">
+              <Listbox.Button
+                disabled={disabled}
+                className="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+              >
+                <span
+                  className={cn('block truncate text-base', {
+                    'text-gray-400': disabled,
+                  })}
+                >
                   {getItemByValue(selectedValue).label}
                 </span>
                 <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -119,4 +136,6 @@ export default function Select<T>({
       </Listbox>
     </div>
   );
-}
+};
+
+export default Select;

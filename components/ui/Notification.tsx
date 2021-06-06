@@ -29,7 +29,7 @@ const Notification: React.FC<Props> = ({
         aria-live="assertive"
         className={cn(
           className,
-          'fixed inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end',
+          'fixed inset-0 z-20 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end',
         )}
         {...props}
       >
@@ -76,7 +76,7 @@ const Notification: React.FC<Props> = ({
                 </div>
                 <div className="ml-4 flex-shrink-0 flex">
                   <button
-                    className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500"
                     onClick={() => {
                       close();
                     }}

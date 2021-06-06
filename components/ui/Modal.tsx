@@ -33,7 +33,7 @@ const Modal: React.FC<Props> = ({
       <Dialog
         as="div"
         static
-        className="fixed z-10 inset-0 overflow-y-auto"
+        className="fixed z-20 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
         open={show}
         onClose={() => {}}
