@@ -1,33 +1,33 @@
 import React from 'react';
 import cn from 'classnames';
+import ReactMde from 'react-mde';
 import { useRouter } from 'next/router';
 import { Disclosure } from '@headlessui/react';
 
 // css
-import s from '@assets/mde.module.css';
 import 'react-mde/lib/styles/css/react-mde-all.css';
 
 // components
-import Button from '@components/ui/Button';
 import Input from '@components/ui/Input';
 import Modal from '@components/ui/Modal';
 import Notification from '@components/ui/Notification';
+import Dashboard from '@components/layout/Dashboard';
 
 // libraries
-import updateNoticeById from '@lib/notice/updateNoticeById';
-import getNoticeById from '@lib/notice/getNoticeById';
-import uploadNotice from '@lib/notice/uploadNotice';
+import uploadMarkdownImage from '@lib/aws/uploadMarkdownImage';
 
 // utils
 import formatDate from '@utils/formatDate';
+import { mdToHtml } from '@utils/marked';
 
 // icons
 import Spinner from '@components/icons/Spinner';
+import getNoticeById from '@lib/notice/getNoticeById';
+import updateNoticeById from '@lib/notice/updateNoticeById';
+import uploadNotice from '@lib/notice/uploadNotice';
+import Button from '@components/ui/Button';
 import { ChevronDownIcon } from '@heroicons/react/outline';
-
-import Dashboard from '@components/layout/Dashboard';
 import BreadCrumb from '@components/ui/BreadCrumb';
-import TextArea from '@components/ui/TextArea';
 
 const initialNoticeInput = {
   title: '',
@@ -46,9 +46,12 @@ const BreadPages = [
     current: true,
   },
 ];
-
 const UploadMarkdown = () => {
   const router = useRouter();
+  const [previewContent, setPreviewContent] = React.useState<string>('');
+  const [selectedTab, setSelectedTab] = React.useState<'write' | 'preview'>(
+    'write',
+  );
   const [noticeInputs, setNoticeInputs] = React.useState<NoticeInputs | null>(
     null,
   );
@@ -63,19 +66,27 @@ const UploadMarkdown = () => {
   const [notiContent, setNotiContent] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const fetchData = React.useCallback(async () => {
+  React.useEffect(() => {
     if (router.query.noticeId && typeof router.query.noticeId === 'string') {
-      await getNoticeById(router.query.noticeId)
+      getNoticeById(router.query.noticeId)
         .then(async (notice) => {
+          setPreviewContent(
+            // await Promise.resolve(converter.makeHtml(notice.content)),
+            await Promise.resolve(mdToHtml(notice.content)),
+          );
           setNoticeInputs({ ...notice });
         })
         .catch((err) => setError(err.message));
     } else setNoticeInputs(initialNoticeInput);
   }, [router]);
 
-  React.useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const save = async function* (data: ArrayBuffer) {
+    yield await uploadMarkdownImage(
+      new File([new Blob([data])], String(Number(new Date()))),
+    );
+
+    return true;
+  };
 
   const handleSubmit = React.useCallback(
     async (noticeInput: NoticeInputs) => {
@@ -92,7 +103,6 @@ const UploadMarkdown = () => {
           await uploadNotice(noticeInput);
         }
         setOpenModal(true);
-        fetchData();
       } catch (err) {
         setNotiContent(err.message);
         setNotiFlags({ success: false, fail: true });
@@ -100,8 +110,9 @@ const UploadMarkdown = () => {
       } finally {
         setLoading(false);
       }
+      // setMdurl(url);
     },
-    [router, fetchData],
+    [router],
   );
   if (error !== null) return <div>{error}</div>;
 
@@ -120,22 +131,20 @@ const UploadMarkdown = () => {
           공지사항 {router.query.noticeId ? '수정' : '업로드'}
         </h3>
       </div>
-      <div className={cn(s.root, 'w-full p-2.5 max-w-5xl mx-auto')}>
+      <div className="w-full p-2.5 max-w-5xl mx-auto">
         <div className="mb-8">
-          {noticeInputs && (
-            <Button
-              onClick={() => handleSubmit(noticeInputs)}
-              disabled={loading}
-              size="sm"
-              className="mr-8"
-            >
-              {router.query.noticeId ? '수정' : '업로드'}
-            </Button>
-          )}
+          <Button
+            onClick={() => handleSubmit(noticeInputs)}
+            disabled={loading}
+            size="sm"
+            className="mr-8"
+          >
+            {router.query.noticeId ? '수정' : '업로드'}
+          </Button>
         </div>
-        <div className="bg-gray-100 p-4 rounded-lg">
+        <div className="bg-white p-4 rounded-lg">
           <p className="text-2xl font-bold">미리보기</p>
-          <Disclosure as="div" defaultOpen className="bg-gray-100">
+          <Disclosure as="div" defaultOpen>
             {({ open }) => (
               <>
                 <Disclosure.Button
@@ -145,7 +154,7 @@ const UploadMarkdown = () => {
                 >
                   <div className="flex justify-between items-center mb-2">
                     <p className="text-xl font-semibold">
-                      {noticeInputs && noticeInputs.title}
+                      {noticeInputs.title}
                     </p>
                     <ChevronDownIcon
                       className={cn('w-6 h-6 text-gray-400 transform', {
@@ -157,42 +166,55 @@ const UploadMarkdown = () => {
                     {formatDate(new Date())} (날짜는 예시입니다.)
                   </p>
                 </Disclosure.Button>
-                <Disclosure.Panel
-                  className="bg-gray-100 p-2 mt-2 mb-6"
-                  as="div"
-                >
-                  <p className="text-black">{noticeInputs.content}</p>
+                <Disclosure.Panel className="bg-gray-50 p-2 mt-2 mb-6" as="div">
+                  {previewContent && (
+                    <div
+                      className="markdown-container"
+                      dangerouslySetInnerHTML={{
+                        __html: previewContent,
+                      }}
+                    />
+                  )}
                 </Disclosure.Panel>
               </>
             )}
           </Disclosure>
         </div>
-        {noticeInputs && (
-          <>
-            <div className="mt-4">
-              <Input
-                label="제목"
-                placeholder="제목을 입력하세요"
-                className="mb-4"
-                onChange={(e) =>
-                  setNoticeInputs({ ...noticeInputs, title: e.target.value })
-                }
-                value={noticeInputs.title}
-              />
-            </div>
-            <p>본문</p>
-            <TextArea
-              className="h-48"
-              value={noticeInputs.content}
-              onChange={(e) => {
-                setNoticeInputs({
-                  ...noticeInputs,
-                  content: e.target.value,
-                });
-              }}
-            />
-          </>
-        )}
+        <div className="mt-4">
+          <Input
+            label="제목"
+            placeholder="제목을 입력하세요"
+            className="mb-4"
+            onChange={(e) =>
+              setNoticeInputs({ ...noticeInputs, title: e.target.value })
+            }
+            value={noticeInputs.title}
+          />
+        </div>
+        <p>본문</p>
+        <ReactMde
+          minEditorHeight={300}
+          value={noticeInputs.content}
+          onChange={(val) => {
+            // setPreviewContent(converter.makeHtml(val));
+            setPreviewContent(mdToHtml(val));
+            setNoticeInputs({ ...noticeInputs, content: val });
+          }}
+          selectedTab={selectedTab}
+          onTabChange={setSelectedTab}
+          generateMarkdownPreview={(markdown) =>
+            // Promise.resolve(converter.makeHtml(markdown))
+            Promise.resolve(mdToHtml(markdown))
+          }
+          childProps={{
+            writeButton: {
+              tabIndex: -1,
+            },
+          }}
+          paste={{
+            saveImage: save,
+          }}
+        />
       </div>
       <Modal
         show={openModal}

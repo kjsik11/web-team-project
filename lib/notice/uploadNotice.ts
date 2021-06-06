@@ -1,3 +1,4 @@
+import uploadMarkdown from '@lib/aws/uploadMarkdown';
 import fetcher from '@lib/fetcher';
 
 const uploadNotice: (noticeInput: NoticeInputs) => Promise<void> = async ({
@@ -7,12 +8,14 @@ const uploadNotice: (noticeInput: NoticeInputs) => Promise<void> = async ({
   if (!title) throw new Error('제목을 입력해주세요');
 
   try {
+    const markdownUrl = await uploadMarkdown(content);
+
     await fetcher('/api/notice', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ title, content }),
+      body: JSON.stringify({ title, markdownUrl }),
     });
   } catch (err) {
     if (process.env.NODE_ENV === 'development') {

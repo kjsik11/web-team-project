@@ -25,7 +25,7 @@ const handler: (
   }
 
   if (req.method === 'PUT') {
-    const { title, content } = req.body;
+    const { title, markdownUrl } = req.body;
     const { upsertedId } = await db.collection('notice').updateOne(
       {
         _id: notice._id,
@@ -33,7 +33,7 @@ const handler: (
       {
         $set: {
           title,
-          content,
+          markdownUrl,
           lastUpdated: new Date(),
         },
       },

@@ -1,7 +1,7 @@
 interface NoticeInfo {
   _id: string;
   title: string;
-  content: string;
+  markdownUrl: string;
   created: string;
   lastUpdated: string;
   deleted: string | null;

@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { connectMongo, withErrorHandler, throwError } from '@utils/common';
-import { ObjectId } from 'bson';
 
 const handler: (
   req: NextApiRequest,
@@ -22,11 +21,11 @@ const handler: (
   }
 
   if (req.method === 'POST') {
-    const { title, content } = req.body;
+    const { title, markdownUrl } = req.body;
 
     const { insertedId } = await db.collection('notice').insertOne({
       title,
-      content,
+      markdownUrl,
       created: new Date(),
       lastUpdated: new Date(),
       deleted: null,

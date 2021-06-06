@@ -4,12 +4,11 @@ import { Disclosure } from '@headlessui/react';
 
 // utils
 import formatDate from '@utils/formatDate';
-import { mdToHtml } from '@utils/marked';
 
 // css
-import s from '@assets/mde.module.css';
-import getContentByMdUrl from '@lib/claNotice/getContentByMdUrl';
 import { ChevronDownIcon } from '@heroicons/react/outline';
+import getContentByMdUrl from '@lib/claNotice/getContentByMdUrl';
+import { mdToHtml } from '@utils/marked';
 
 // icons
 
@@ -19,11 +18,18 @@ interface Props {
 }
 
 const NoticeListItem: React.FC<Props> = ({ className, noticeItem }) => {
+  const [content, setContent] = React.useState<string>('');
+
+  React.useEffect(() => {
+    getContentByMdUrl(noticeItem.markdownUrl)
+      .then(async (content) =>
+        setContent(await Promise.resolve(mdToHtml(content))),
+      )
+      .catch((err) => console.log(err.message));
+  }, [noticeItem]);
+
   return (
-    <Disclosure
-      as="div"
-      className={cn(className, s.root, 'border-b border-gray-200')}
-    >
+    <Disclosure as="div" className={cn(className, 'border-b border-gray-200')}>
       {({ open }) => (
         <>
           <Disclosure.Button
@@ -44,7 +50,12 @@ const NoticeListItem: React.FC<Props> = ({ className, noticeItem }) => {
             </p>
           </Disclosure.Button>
           <Disclosure.Panel className="bg-gray-50 p-2 mt-2 mb-6" as="div">
-            <p>{noticeItem.content}</p>
+            <div
+              className="markdown-container"
+              dangerouslySetInnerHTML={{
+                __html: content,
+              }}
+            />
           </Disclosure.Panel>
         </>
       )}

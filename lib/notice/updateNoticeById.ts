@@ -1,3 +1,4 @@
+import uploadMarkdown from '@lib/aws/uploadMarkdown';
 import fetcher from '@lib/fetcher';
 
 const updateNoticeById: (
@@ -7,12 +8,14 @@ const updateNoticeById: (
   if (!title) throw new Error('제목을 입력해주세요');
 
   try {
+    const markdownUrl = await uploadMarkdown(content);
+
     await fetcher(`/api/notice/${noticeId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ title, content }),
+      body: JSON.stringify({ title, markdownUrl }),
     });
   } catch (err) {
     if (process.env.NODE_ENV === 'development') {
