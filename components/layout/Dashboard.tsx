@@ -5,7 +5,6 @@ import NextLink from 'next/link';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   CalendarIcon,
-  CogIcon,
   HomeIcon,
   MenuIcon,
   ViewGridIcon,
@@ -21,7 +20,7 @@ import Link from '@components/ui/Link';
 
 // librarise
 import Button from '@components/ui/Button';
-import { BookOpenIcon } from '@heroicons/react/solid';
+import { BookOpenIcon, EyeIcon } from '@heroicons/react/solid';
 
 const sidebarNavigation = [
   { name: 'Home', href: '/', icon: HomeIcon, key: '/home' },
@@ -38,7 +37,12 @@ const sidebarNavigation = [
     key: 'portfolio',
   },
   { name: 'Notice', href: '/notice', icon: ViewGridIcon, key: 'notice' },
-  { name: 'Settings', href: '/settings', icon: CogIcon, key: 'settings' },
+  {
+    name: 'View-Noti',
+    href: '/view-noti',
+    icon: EyeIcon,
+    key: 'view-noti',
+  },
 ];
 const userNavigation = [
   // { name: 'Your Profile', href: '#' },

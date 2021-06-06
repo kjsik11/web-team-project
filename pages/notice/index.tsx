@@ -72,9 +72,12 @@ const NoticePage = () => {
 
   return (
     <div className="pt-4 sm:pt-8 md:pt-12 pb-32 px-6 md:px-8 lg:px-12 max-w-screen-xl mx-auto ">
-      <div>
-        <BreadCrumb pages={BreadPages} className="mb-8" />
+      <BreadCrumb pages={BreadPages} className="mb-8" />
+
+      <div className="pb-6 border-b border-gray-200">
+        <h3 className="text-3xl font-semibold">공지사항 관리</h3>
       </div>
+
       <div className="flex flex-col p-4">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">

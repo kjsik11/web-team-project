@@ -29,11 +29,25 @@ import Spinner from '@components/icons/Spinner';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 
 import Dashboard from '@components/layout/Dashboard';
+import BreadCrumb from '@components/ui/BreadCrumb';
 
 const initialNoticeInput = {
   title: '',
   content: '본문을 입력해주세요',
 };
+
+const BreadPages = [
+  {
+    name: 'Notice',
+    href: '/notice',
+    current: false,
+  },
+  {
+    name: 'Upload',
+    href: '/upload',
+    current: true,
+  },
+];
 
 const UploadMarkdown = () => {
   const router = useRouter();
@@ -118,7 +132,13 @@ const UploadMarkdown = () => {
     );
 
   return (
-    <div className="w-full mb-16">
+    <div className="pt-4 sm:pt-8 md:pt-12 pb-32 px-6 md:px-8 lg:px-12 max-w-screen-xl mx-auto ">
+      <BreadCrumb pages={BreadPages} className="mb-8" />
+      <div className="pb-6 border-b border-gray-200">
+        <h3 className="text-3xl font-semibold">
+          공지사항 {router.query.noticeId ? '수정' : '업로드'}
+        </h3>
+      </div>
       <div className={cn(s.root, 'w-full p-2.5 max-w-5xl mx-auto')}>
         <div className="mb-8">
           <Button
