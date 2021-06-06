@@ -125,11 +125,7 @@ const UploadMarkdown = () => {
   if (error !== null) return <div>{error}</div>;
 
   if (noticeInputs === null)
-    return (
-      <div className="h-[404px] flex justify-center items-center">
-        <Spinner className="w-12 h-12 animate-spin" />
-      </div>
-    );
+    return <div className="h-[404px] flex justify-center items-center">hi</div>;
 
   return (
     <div className="pt-4 sm:pt-8 md:pt-12 pb-32 px-6 md:px-8 lg:px-12 max-w-screen-xl mx-auto ">

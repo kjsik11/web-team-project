@@ -27,25 +27,6 @@ const Noop: React.FC = ({ children }) => <>{children}</>;
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const Layout = (Component as any).Layout || Noop;
 
-  React.useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker
-          .register('/sw.js')
-          .then((registration) => {
-            console.log('SW registered', registration);
-            registration.pushManager.subscribe({ userVisibleOnly: true });
-            Notification.requestPermission().then((p) => {
-              console.log(p);
-            });
-          })
-          .catch((e) => {
-            console.log('SW registration failed: ', e);
-          });
-      });
-    }
-  }, []);
-
   return (
     <>
       <Head>
