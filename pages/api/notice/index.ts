@@ -9,7 +9,9 @@ const handler: (
   const { db } = await connectMongo();
 
   if (req.method === 'GET') {
-    const cursor = db.collection('notice').find({ deleted: null });
+    const cursor = db
+      .collection('notice')
+      .find({ deleted: null }, { sort: { created: -1 } });
 
     const notices = await cursor.toArray();
 
